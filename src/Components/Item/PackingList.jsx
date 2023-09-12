@@ -2,7 +2,14 @@
 import { useState } from "react";
 import Item from "./Items";
 
-function PackingList({ items, onDeleteItem, onUpdateItem, onClearItems }) {
+function PackingList({
+  items,
+  onDeleteItem,
+  onUpdateItem,
+  onClearItems,
+  onUpdateAllItems,
+  isCheckedAll,
+}) {
   const [sortBy, setSortBy] = useState("input");
 
   const filterBy = {
@@ -34,6 +41,23 @@ function PackingList({ items, onDeleteItem, onUpdateItem, onClearItems }) {
         </select>
 
         <button onClick={onClearItems}>Clear List</button>
+
+        <div
+          style={{
+            margin: "2rem 1rem",
+            border: "2px solid #fff",
+            textAlign: "center",
+          }}
+        >
+          <span style={{ marginRight: "1rem" }}>Check All</span>
+          <input
+            type="checkbox"
+            checked={isCheckedAll}
+            onChange={(e) => {
+              onUpdateAllItems(Boolean(e.target.checked));
+            }}
+          />
+        </div>
       </div>
     </div>
   );

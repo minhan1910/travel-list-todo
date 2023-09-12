@@ -28,6 +28,12 @@ const initialItems = [
 
 function App() {
   const [items, setItems] = useState(initialItems);
+  let isCheckedAll = false;
+
+  const itemsIsChecked = items.filter((item) => item.packed);
+  if (itemsIsChecked.length === items.length) {
+    isCheckedAll = true;
+  }
 
   function handleAddItems(item) {
     // react is immutate can not push like it so we need to destruct creaete new state
@@ -37,6 +43,14 @@ function App() {
 
   function handleDeleteItem(id) {
     setItems((items) => items.filter((item) => item.id !== id));
+  }
+
+  function handleUpdateAllItems(isCheckedAll) {
+    setItems((items) =>
+      items.map((item) => {
+        return { ...item, packed: isCheckedAll };
+      })
+    );
   }
 
   function handleUpdateItem(id) {
@@ -69,6 +83,13 @@ function App() {
     getPercentageNumberOfItemsPacked,
   };
 
+  const handleFunctions = {
+    onUpdateItem: handleUpdateItem,
+    onUpdateAllItems: handleUpdateAllItems,
+    onDeleteItem: handleDeleteItem,
+    onClearItems: hanldeClearItems,
+  };
+
   function hanldeClearItems() {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete all items ?"
@@ -84,10 +105,13 @@ function App() {
       <Logo />
       <Form onAddItems={handleAddItems} />
       <PackingList
-        onUpdateItem={handleUpdateItem}
-        onDeleteItem={handleDeleteItem}
+        // onUpdateItem={handleUpdateItem}
+        // onUpdateAllItems={handleUpdateAllItems}
+        // onDeleteItem={handleDeleteItem}
         items={items}
-        onClearItems={hanldeClearItems}
+        isCheckedAll={isCheckedAll}
+        // onClearItems={hanldeClearItems}
+        {...handleFunctions}
       />
       <Stats {...getFunctions} />
     </div>

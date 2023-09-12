@@ -12,7 +12,7 @@ function Item({
       <input
         type="checkbox"
         value={packed}
-        defaultChecked={packed}
+        checked={packed}
         onChange={() => onUpdateItem(id)}
       />
       <span style={packed ? { textDecoration: "line-through" } : {}}>
